@@ -25,7 +25,7 @@ logging.basicConfig(level=logging.INFO)
 
 # Initialize bot and dispatcher
 bot = Bot(token=BOT_TOKEN)
-dp = Dispatcher(bot)
+dp = Dispatcher()
 dp.middleware.setup(LoggingMiddleware())
 
 # Load YOLO model
@@ -73,10 +73,10 @@ async def process_image(message: types.Message):
         logging.error(f"Error processing image: {e}")
         await message.reply("Xatolik yuz berdi, iltimos, boshqa rasm yuboring.")
 
-@dp.message_handler(content_types=ContentType.PHOTO)
+@dp.message(lambda message: message.photo)
 async def handle_photo(message: types.Message):
     await process_image(message)
 
 if __name__ == "__main__":
-    executor.start_polling(dp, skip_updates=True)
+    asyncio.run(main())
 
