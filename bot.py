@@ -3,15 +3,21 @@ import logging
 import asyncio
 from aiogram import Bot, Dispatcher, types
 from aiogram.types import ContentType
-from aiogram.utils import executor
+import asyncio
+async def main():
+    print("🚀 Bot ishga tushdi...")
+    await dp.start_polling(bot)
+
+if __name__ == "__main__":
+    asyncio.run(main())
 from ultralytics import YOLO
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
 import time
 
 # Environment variables
-BOT_TOKEN = os.getenv("BOT_TOKEN")
-SPREADSHEET_ID = os.getenv("SPREADSHEET_ID")
+BOT_TOKEN = os.getenv("7752872578:AAG915cbkcOBkBspD-yZwigLLyH6tgelJLg")
+SPREADSHEET_ID = os.getenv("1yna6vnX75cUJl-tNQkEtl_h1pkfGJzsuZdS80nt584Y")
 MODEL_PATH = os.getenv("MODEL_PATH", "yolov8n.pt")
 
 # Logging setup
