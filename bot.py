@@ -6,7 +6,7 @@ from aiogram.types import ContentType
 import asyncio
 async def main():
     print("🚀 Bot ishga tushdi...")
-    await dp.start_polling(bot)
+    await dp.start_polling()
 
 if __name__ == "__main__":
     asyncio.run(main())
