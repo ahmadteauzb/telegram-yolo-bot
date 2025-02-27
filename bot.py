@@ -2,14 +2,8 @@ import os
 import logging
 import asyncio
 from aiogram import Bot, Dispatcher, types
-from aiogram.types import ContentType
-import asyncio
-async def main():
-    print("🚀 Bot ishga tushdi...")
-    await dp.start_polling()
-
-if __name__ == "__main__":
-    asyncio.run(main())
+from aiogram.filters import Command
+from aiogram.types import Message, ContentType
 from ultralytics import YOLO
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
@@ -26,7 +20,6 @@ logging.basicConfig(level=logging.INFO)
 # Initialize bot and dispatcher
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
-dp.middleware.setup(LoggingMiddleware())
 
 # Load YOLO model
 yolo_model = YOLO(MODEL_PATH)
@@ -37,7 +30,12 @@ credentials = ServiceAccountCredentials.from_json_keyfile_name("google_credentia
 gc = gspread.authorize(credentials)
 sheet = gc.open_by_key(SPREADSHEET_ID).sheet1
 
-async def process_image(message: types.Message):
+@dp.message(Command("start"))
+async def start_command(message: Message):
+    await message.reply("Assalomu alaykum! Rasmlarni jo‘nating va men ularni tahlil qilib beraman!")
+
+@dp.message(lambda message: message.photo)
+async def handle_photo(message: Message):
     try:
         photo = message.photo[-1]
         file_info = await bot.get_file(photo.file_id)
@@ -73,10 +71,9 @@ async def process_image(message: types.Message):
         logging.error(f"Error processing image: {e}")
         await message.reply("Xatolik yuz berdi, iltimos, boshqa rasm yuboring.")
 
-@dp.message(lambda message: message.photo)
-async def handle_photo(message: types.Message):
-    await process_image(message)
+async def main():
+    print("🚀 Bot ishga tushdi...")
+    await dp.start_polling(bot)
 
 if __name__ == "__main__":
     asyncio.run(main())
-
