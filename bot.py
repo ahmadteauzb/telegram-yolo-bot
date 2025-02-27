@@ -1,7 +1,9 @@
 import asyncio
 import os
 from aiogram import Bot, Dispatcher, types
-from aiogram.filters import Command, Text
+from aiogram.dispatcher.filters import Text
+from aiogram.dispatcher.filters import Command
+
 
 # Telegram bot tokenini olish (Railway-dan o'rnatiladi)
 BOT_TOKEN = os.getenv("7752872578:AAG915cbkcOBkBspD-yZwigLLyH6tgelJLg")
